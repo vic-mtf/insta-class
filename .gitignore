@@ -1,0 +1,14 @@
+# compiled python files and directories
+__pycache__/
+*.py[cod]
+
+# ignore vscode config
+.vscode/
+.idea/
+
+#files log
+*.log
+
+#virtual environment
+venv/
+.env/
