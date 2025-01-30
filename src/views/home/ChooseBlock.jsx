@@ -1,7 +1,7 @@
-import { Box, Button, Typography, alpha } from "@mui/material";
+import { Box, Typography, alpha } from "@mui/material";
 import background from "../../assets/mosaic.webp";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { Link } from "react-router-dom";
+import CardButton from "../../components/CardButton";
 
 export default function ChooseBlock() {
   return (
@@ -63,29 +63,38 @@ export default function ChooseBlock() {
             pl={2}
             sx={{
               borderLeft: (theme) => `5px solid ${theme.palette.primary.main}`,
-              fontSize: 40,
+              fontSize: 34,
             }}>
             {texts.comment}
           </Typography>
 
-          <Typography mb={1}>{texts.subTitle}</Typography>
-          <Box display='flex' gap={2} my={4}>
-            <Button
-              variant='contained'
+          <Typography
+            mb={1}
+            fontSize={20}
+            color='textSecondary'
+            px={5}
+            fontWeight={200}>
+            {texts.subTitle}
+          </Typography>
+          <Box display='flex' gap={2} my={4} px={2}>
+            <CardButton
+              // variant='contained'
               LinkComponent={Link}
-              size='large'
-              to='/sign-up'
-              endIcon={<NavigateNextIcon />}>
-              {texts.buttons.createAccount}
-            </Button>
-            <Button
-              variant='contained'
+              // size='large'
+              to='/account/signup'
+              //endIcon={<NavigateNextIcon />}
+              text={texts.buttons.createAccount.text}
+              title={texts.buttons.createAccount.title}
+            />
+            <CardButton
+              // variant='contained'
               LinkComponent={Link}
-              size='large'
-              to='/sign-in'
-              endIcon={<NavigateNextIcon />}>
-              {texts.buttons.connect}
-            </Button>
+              // size='large'
+              to='/account/login'
+              //endIcon={<NavigateNextIcon />}
+              text={texts.buttons.connect.text}
+              title={texts.buttons.connect.title}
+            />
           </Box>
         </div>
       </Box>
@@ -95,12 +104,15 @@ export default function ChooseBlock() {
 
 const texts = {
   buttons: {
-    createAccount: "Créer un compte",
-    connect: "Connectez-vous",
+    createAccount: {
+      text: "Créer un compte",
+      title: "Enseignant ou élève ?",
+    },
+    connect: { text: "Connectez-vous", title: "J'ai déjà un compte !" },
   },
   title: "Bienvenue sur",
   comment:
-    "Je ne savais pas qu'Insta-Class pouvait faire ça Presque tout le monde",
+    "Je ne savais pas que l'Insta-Class pouvait faire ça ... ... Presque tout le monde !",
   subTitle:
     "Insta-Class est votre partenaire idéal pour créer et délivrer des ressources pédagogiques complètes qui répondent aux besoins de chaque élève, du début à la fin de la journée scolaire. Que vous soyez enseignant ou administrateur, notre plateforme vous offre des outils puissants et intuitifs pour transformer l'apprentissage en classe.",
 };

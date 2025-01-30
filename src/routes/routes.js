@@ -1,13 +1,23 @@
 import Home from "../views/home/Home";
-import SignIn from "../views/sign-in/SignIn";
+
 const routes = [
   {
     element: Home,
     path: "/",
-  },
-  {
-    element: SignIn,
-    path: "/sign-in",
+    children: [
+      {
+        path: "account",
+        element: null,
+      },
+      {
+        path: "account/login",
+        element: null,
+      },
+      {
+        path: "account/signup",
+        element: null,
+      },
+    ],
   },
 ];
 

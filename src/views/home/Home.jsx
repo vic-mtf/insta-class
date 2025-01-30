@@ -1,35 +1,41 @@
-import { AppBar, Box, Divider, Toolbar, Typography } from "@mui/material";
-import logo from "../../assets/class_room_100.png";
-import ChooseBlock from "./ChooseBlock";
+import { Box, Fade } from "@mui/material";
+import { useLocation } from "react-router-dom";
+import HomeContent from "./HomeContent";
+import Account from "../account/Account";
+import normalizePathname from "../../utils/normalizePathname";
 
 export default function Home() {
-  return (
-    <>
-      <div>
-        <AppBar
-          color='default'
-          position='relative'
-          sx={{ bgcolor: "background.default", zIndex: 100, boxShadow: 0 }}>
-          <Toolbar>
-            <Box
-              display='flex'
-              flexDirection='row'
-              justifyContent='center'
-              alignItems='center'
-              gap={1}>
-              <Box component='img' alt='logo' src={logo} width={50} />
-              <Typography
-                variant='h5'
-                fontWeight='bold'
-                sx={{ color: "primary.main" }}>
-                Insta Class
-              </Typography>
-            </Box>
-          </Toolbar>
-        </AppBar>
-      </div>
-      <Divider />
-      <ChooseBlock />
-    </>
-  );
+  const { pathname } = useLocation();
+
+  return views.map(({ id, element, paths }) => (
+    <Fade
+      unmountOnExit
+      key={id}
+      appear={false}
+      in={paths.includes(normalizePathname(pathname))}
+      style={{
+        height: "100dvh",
+        width: "100dvw",
+        display: "flex",
+        flexDirection: "column",
+        position: "absolute",
+        top: 0,
+        left: 0,
+      }}>
+      <Box>{element}</Box>
+    </Fade>
+  ));
 }
+
+const views = [
+  {
+    paths: ["", "/"],
+    element: <HomeContent />,
+    id: "_home-content",
+  },
+  {
+    paths: ["/account", "/account/login", "/account/signup"],
+    element: <Account />,
+    id: "_account",
+  },
+];
