@@ -3,7 +3,7 @@ from flask_socketio import SocketIO
 from src.tools.generate_code import generate_hex_code
 from src.router.router import router
 from src.middlewares.authenticate import authenticate
-
+from flask_cors import CORS
 
 socketio = SocketIO(None, cors_allowed_origins="*")
 
@@ -11,6 +11,9 @@ socketio = SocketIO(None, cors_allowed_origins="*")
 def cerate_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = generate_hex_code(32)
+    CORS(app, resources={
+        r"^/api/": {"origins": "*"}  # Allow all origins for this route
+    })
     socketio.init_app(app)
     return app
 

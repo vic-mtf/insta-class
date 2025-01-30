@@ -15,6 +15,7 @@ def login():
             if check_password(user.pwd, data['pwd']):
                 keys = ['fname', 'lname', 'uname']
                 user_data = user.get_user_infos_as_dict(*keys)
+                print(user_data)
                 user_data['token'] = create_token(user._id)
                 return make_response(user_data, 200)
         return make_response({"message": "Incorrect username or password"}, 401)
