@@ -54,7 +54,7 @@ export default function ChooseBlock() {
               component='span'
               color='primary'
               fontWeight='bold'>
-              Insta-Class
+              Insta Class
             </Typography>
           </Typography>
           <Typography
@@ -112,7 +112,7 @@ const texts = {
   },
   title: "Bienvenue sur",
   comment:
-    "Je ne savais pas que l'Insta-Class pouvait faire ça ... ... Presque tout le monde !",
+    "Je ne savais pas que l'Insta Class pouvait faire ça ... ... Presque tout le monde !",
   subTitle:
-    "Insta-Class est votre partenaire idéal pour créer et délivrer des ressources pédagogiques complètes qui répondent aux besoins de chaque élève, du début à la fin de la journée scolaire. Que vous soyez enseignant ou administrateur, notre plateforme vous offre des outils puissants et intuitifs pour transformer l'apprentissage en classe.",
+    "Insta Class est votre partenaire idéal pour créer et délivrer des ressources pédagogiques complètes qui répondent aux besoins de chaque élève, du début à la fin de la journée scolaire. Que vous soyez enseignant ou élève, notre plateforme vous offre des outils puissants et intuitifs pour transformer l'apprentissage en classe.",
 };

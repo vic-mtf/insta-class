@@ -81,14 +81,15 @@ export default function Account() {
           overflow='hidden'
           width={800}
           minWidth={0}
-          height='60%'
+          minHeight={550}
           display='flex'
           flexDirection='row'>
           <Box
             flex={1}
             display='flex'
             position='relative'
-            flexDirection='column'>
+            flexDirection='column'
+            overflow='hidden'>
             {subViews.map(({ id, element, path }) => {
               const show = path === normalizePathname(pathname);
               const direction = id === "_login" ? "right" : "left";
