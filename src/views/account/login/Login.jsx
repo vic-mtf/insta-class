@@ -20,18 +20,26 @@ import { axios } from "../../../hooks/useAxions";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../../../redux/user";
+import { useSelector } from "react-redux";
+import { updateApp } from "../../../redux/app";
+import store from "../../../redux/store";
+import { encrypt } from "../../../utils/crypt";
+import useUserData from "../../../hooks/useUserData";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
+  const defaulUser = useUserData();
+
   const {
     register,
     handleSubmit,
     // watch,
     //formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues: { ...defaulUser } });
+
   const onSubmit = async (data) => {
     if (data?.uname?.trim() && data?.pwd?.trim())
       try {
@@ -43,10 +51,14 @@ export default function Login() {
           url: "/api/login",
           data,
         });
+        const { app } = store.getState();
         dispatch(updateUser({ data: { connected: true, ...response.data } }));
+        dispatch(
+          updateApp({ data: { user: app.remembered ? encrypt(data) : null } })
+        );
         navigateTo("/workspace", { replace: true });
       } catch (e) {
-        setError(e);
+        if (e) setError(e);
         console.error(e);
       }
     setLoading(false);
@@ -102,7 +114,7 @@ export default function Login() {
               },
             }}
           />
-          <FormControlLabel control={<Checkbox />} label='Se souvenir de moi' />
+          <RememberCheckbox />
           <Button variant='contained' type='submit'>
             Se connecter
           </Button>
@@ -133,6 +145,21 @@ export default function Login() {
     </>
   );
 }
+
+const RememberCheckbox = () => {
+  const checkbox = useSelector((store) => store.app.remembered);
+  const dispatch = useDispatch();
+  return (
+    <FormControlLabel
+      checked={checkbox}
+      onChange={(_, remembered) =>
+        dispatch(updateApp({ data: { remembered } }))
+      }
+      control={<Checkbox />}
+      label='Se souvenir de moi'
+    />
+  );
+};
 
 const texts = {
   title: "Connexion à Insta class",
