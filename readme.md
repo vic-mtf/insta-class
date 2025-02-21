@@ -1,5 +1,4 @@
-```markdown
-# Projet Insta-class
+# Projet Insta class
 
 Ce projet est une API développée en Python avec le framework Flask. Ce fichier README vous guidera à travers les étapes nécessaires pour configurer un environnement de développement et installer les dépendances requises.
 
@@ -9,7 +8,7 @@ Ce projet est une API développée en Python avec le framework Flask. Ce fichier
 
 Avant de commencer, assurez-vous d'avoir les éléments suivants installés sur votre machine :
 
-- **Python 3.7 ou supérieur**
+- **Python 3 ou supérieur**
 - **`pip`** (gestionnaire de paquets Python)
 
 ---
@@ -17,30 +16,28 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants installés sur 
 ## Structure du projet
 
 Voici un aperçu de la structure du projet :
+
 ```
-
-votre-projet/
-├── configs/ # Dossier contenant les fichiers de configuration
-├── data/ # Dossier pour les données (ex : fichiers JSON, CSV, etc.)
-├── public/ # Dossier pour les fichiers statiques (ex : images, CSS, JS)
-├── src/ # Dossier principal du code source
-│ ├── controllers/ # Contrôleurs de l'application
-│ ├── models/ # Modèles de données (ex : classes pour la base de données)
-│ ├── router/ # Fichiers de routage (ex : définition des routes de l'API)
-│ ├── tools/ # Outils utilitaires (ex : fonctions helper)
-│ └── app.py # Point d'entrée de l'application Flask
-├── .env # Fichier de variables d'environnement
-├── .gitignore # Fichier pour ignorer certains fichiers/dossiers dans Git
-├── README.md # Ce fichier
-├── requirements.txt # Fichier listant les dépendances du projet
-└── server.py # Script pour lancer le serveur Flask
-
-````
+projet/
+├── configs/                # Dossier contenant les fichiers de configuration
+├── data/                   # Dossier pour les données (ex : fichiers JSON, CSV, etc.)
+├── public/                 # Dossier pour les fichiers statiques (ex : images, CSS, JS)
+├── src/                    # Dossier principal du code source
+│   ├── controllers/        # Contrôleurs de l'application
+│   ├── models/             # Modèles de données (ex : classes pour la base de données)
+│   ├── router/             # Fichiers de routage (ex : définition des routes de l'API)
+│   ├── tools/              # Outils utilitaires (ex : fonctions helper)
+│   └── app.py              # Point d'entrée de l'application Flask
+├── .env                    # Fichier de variables d'environnement
+├── .gitignore              # Fichier pour ignorer certains fichiers/dossiers dans Git
+├── README.md               # Ce fichier
+├── requirements.txt        # Fichier listant les dépendances du projet
+└── server.py               # Script pour lancer le serveur Flask
+```
 
 ---
 
 ## Configuration de l'environnement de développement
-
 
 ### 1. Créer un environnement virtuel
 
@@ -48,7 +45,7 @@ Il est recommandé d'utiliser un environnement virtuel pour isoler les dépendan
 
 ```bash
 python -m venv venv
-````
+```
 
 ### 2. Activer l'environnement virtuel
 
