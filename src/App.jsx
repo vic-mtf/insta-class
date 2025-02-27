@@ -10,11 +10,12 @@ export default function App() {
       style={{
         display: "flex",
         justifyContent: "center",
-        //alignItems: "center",
-        height: "100dvh",
-        width: "100dvw",
-        overflow: "auto",
+        position: "relative",
+        flex: 1,
+        overflow: "hidden",
         flexDirection: "column",
+        width: "100%",
+        height: "100dvh",
       }}>
       {<RouterProvider router={router(connected)} />}
     </div>

@@ -1,76 +1,56 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  ListItem,
-  ListItemAvatar,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-} from "@mui/material";
+import React from "react";
+import { Box, Typography } from "@mui/material";
 import PropTypes from "prop-types";
+import ChooseButton from "../../../components/ChooseButton";
 // import student_image from "../../../assets/student.webp";
 // import teacher_image from "../../../assets/teacher.webp";
 import SchoolIcon from "@mui/icons-material/School";
 import ClassIcon from "@mui/icons-material/Class";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
-export default function ChoosingStatus() {
-  return (
-    <Box display='flex' gap={2} mt={2} flexDirection='column'>
-      <Box
-        display='flex'
-        flexDirection='column'
-        sx={{ "& > div": { flex: 1 } }}
-        gap={1}>
-        <ChooseButton
-          title={texts.buttons.teacher.title}
-          description={texts.buttons.teacher.description}
-          icon={<ClassIcon fontSize='large' />}
-        />
-        <ChooseButton
-          title={texts.buttons.student.title}
-          description={texts.buttons.student.description}
-          icon={<SchoolIcon fontSize='large' />}
-        />
+const ChoosingStatus = React.forwardRef(
+  ({ handleChangeSate, stateDataMem }, ref) => {
+    return (
+      <Box display='flex' gap={2} mt={2} flexDirection='column' ref={ref}>
+        <Box
+          display='flex'
+          flexDirection='column'
+          sx={{ "& > div": { flex: 1 } }}
+          gap={1}>
+          <ChooseButton
+            title={texts.buttons.teacher.title}
+            description={texts.buttons.teacher.description}
+            onClick={() => handleChangeSate(1, "teacher")}
+            icon={<ClassIcon fontSize='large' />}
+            selected={stateDataMem.role === "teacher"}
+          />
+          <ChooseButton
+            title={texts.buttons.student.title}
+            description={texts.buttons.student.description}
+            onClick={() => handleChangeSate(1, "student")}
+            icon={<SchoolIcon fontSize='large' />}
+            selected={stateDataMem.role === "student"}
+          />
+        </Box>
+        <Typography variant='body2'>{texts.description}</Typography>
       </Box>
-      <Typography>{texts.description}</Typography>
-    </Box>
-  );
-}
+    );
+  }
+);
 
-const ChooseButton = ({ icon, title, description }) => {
-  return (
-    <Box component='div' position='relative'>
-      <ListItem disableGutters>
-        <ListItemButton
-          sx={{
-            borderRadius: 2,
-            border: (theme) => `1px solid ${theme.palette.divider}`,
-          }}>
-          <ListItemAvatar>
-            <Avatar> {icon}</Avatar>
-          </ListItemAvatar>
-          <ListItemText primary={title} secondary={description} />
-          <ListItemIcon sx={{ justifyContent: "end" }}>
-            <NavigateNextIcon />
-          </ListItemIcon>
-        </ListItemButton>
-      </ListItem>
-    </Box>
-  );
+ChoosingStatus.displayName = "ChoosingStatus";
+ChoosingStatus.propTypes = {
+  control: PropTypes.object,
+  register: PropTypes.func,
+  errors: PropTypes.object,
+  step: PropTypes.number,
+  handleChangeSate: PropTypes.func.isRequired,
+  stateDataMem: PropTypes.shape({
+    role: PropTypes.oneOf(["student", "teacher"]),
+    lastStep: PropTypes.number,
+  }).isRequired,
 };
 
-ChooseButton.propTypes = {
-  title: PropTypes.string,
-  description: PropTypes.string,
-  icon: PropTypes.node,
-};
+export default ChoosingStatus;
 
 const texts = {
   description:

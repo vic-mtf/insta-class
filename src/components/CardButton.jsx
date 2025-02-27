@@ -13,6 +13,7 @@ const CardButton = ({ title, text, ...otherProps }) => {
       <Button
         size='large'
         variant='contained'
+        fullWidth
         {...otherProps}
         sx={{
           flexDirection: "column",
@@ -27,8 +28,13 @@ const CardButton = ({ title, text, ...otherProps }) => {
           sx={{ color: theme.palette.text.secondary }}>
           {title}
         </Typography>
-        <Box display='flex' justifyContent='center' alignItems='center' gap={1}>
-          <Typography variant='body1' fontWeight={500}>
+        <Box
+          display='flex'
+          justifyContent='center'
+          alignItems='center'
+          gap={1}
+          width='100%'>
+          <Typography variant='body1' fontWeight={500} flexGrow={1}>
             {text}
           </Typography>
           <NavigateNextIcon />

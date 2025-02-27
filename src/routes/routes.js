@@ -1,4 +1,6 @@
 import Home from "../views/home/Home";
+import Workspace from "../views/workspace/Workspace";
+import RedirectToWorkspace from "../components/RedirectToWorkspace";
 
 const routes = [
   {
@@ -22,6 +24,17 @@ const routes = [
         status: "private",
       },
     ],
+  },
+  {
+    path: "/*",
+    element: RedirectToWorkspace,
+    status: "protected",
+  },
+
+  {
+    path: "workspace/*",
+    element: Workspace,
+    status: "protected",
   },
 ];
 

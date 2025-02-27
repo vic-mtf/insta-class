@@ -16,19 +16,22 @@ import PersonIcon from "@mui/icons-material/Person";
 import KeyIcon from "@mui/icons-material/Key";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { axios } from "../../../hooks/useAxions";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import useAxios from "../../../hooks/useAxions";
+import InputPassword from "../../../components/InputPassword";
+import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../../../redux/user";
-import { useSelector } from "react-redux";
 import { updateApp } from "../../../redux/app";
 import store from "../../../redux/store";
 import { encrypt } from "../../../utils/crypt";
 import useUserData from "../../../hooks/useUserData";
+import { useLayoutEffect } from "react";
 
 export default function Login() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [{ loading, error, data }, refesh] = useAxios(
+    { method: "POST", url: "/api/login" },
+    { manual: true }
+  );
+  const connected = useSelector((store) => store.user.connected);
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
   const defaulUser = useUserData();
@@ -43,33 +46,31 @@ export default function Login() {
   const onSubmit = async (data) => {
     if (data?.uname?.trim() && data?.pwd?.trim())
       try {
-        console.log("Bonjour les gens");
-        setLoading(true);
-        setError(null);
-        const response = await axios({
-          method: "POST",
-          url: "/api/login",
-          data,
-        });
+        const response = await refesh({ data });
         const { app } = store.getState();
         dispatch(updateUser({ data: { connected: true, ...response.data } }));
         dispatch(
           updateApp({ data: { user: app.remembered ? encrypt(data) : null } })
         );
-        navigateTo("/workspace", { replace: true });
       } catch (e) {
-        if (e) setError(e);
-        console.error(e);
+        if (e) console.error(e);
       }
-    setLoading(false);
   };
+
+  useLayoutEffect(() => {
+    return () => {
+      if (data || connected) navigateTo("/workspace", { replace: true });
+    };
+  }, [data, navigateTo, connected]);
   return (
     <>
       <Box
         display='flex'
         flex={1}
         flexDirection='column'
-        p={5}
+        sx={{
+          p: { xs: 1.2, md: 4 },
+        }}
         textAlign='initial'>
         <Toolbar disableGutters>
           <Typography variant='h5'>{texts.title}</Typography>
@@ -79,6 +80,7 @@ export default function Login() {
           display='flex'
           flexDirection='column'
           component='form'
+          pt={2}
           onSubmit={handleSubmit(onSubmit)}
           flex={1}>
           <TextField
@@ -97,22 +99,18 @@ export default function Login() {
               },
             }}
           />
-          <TextField
+          <InputPassword
             fullWidth
             required
             placeholder={texts.inputs.password.placeholder}
             name='pwd'
             type='password'
             {...register("pwd", { required: true })}
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <InputAdornment position='start'>
-                    <KeyIcon />
-                  </InputAdornment>
-                ),
-              },
-            }}
+            startAdornment={
+              <InputAdornment position='start'>
+                <KeyIcon />
+              </InputAdornment>
+            }
           />
           <RememberCheckbox />
           <Button variant='contained' type='submit'>

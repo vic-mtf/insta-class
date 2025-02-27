@@ -13,7 +13,11 @@ export default function ChooseBlock() {
       sx={{ background: `url(${background})` }}>
       <Box
         sx={{
-          width: "50%",
+          width: {
+            xs: "95%",
+            md: 800,
+            lg: 900,
+          },
           height: "100%",
           position: "relative",
           display: "flex",
@@ -46,11 +50,11 @@ export default function ChooseBlock() {
               `linear-gradient(90deg, ${theme.palette.background.default}, transparent)`,
           },
         }}>
-        <div style={{ width: "100%", margin: "5% 0" }}>
-          <Typography variant='h4' textAlign='center' mt={1}>
+        <div style={{ width: "100%", margin: "10px 0" }}>
+          <Typography variant='h5' textAlign='center' mt={1}>
             {texts.title}{" "}
             <Typography
-              variant='h4'
+              variant='h5'
               component='span'
               color='primary'
               fontWeight='bold'>
@@ -63,20 +67,30 @@ export default function ChooseBlock() {
             pl={2}
             sx={{
               borderLeft: (theme) => `5px solid ${theme.palette.primary.main}`,
-              fontSize: 34,
+              fontSize: 24,
             }}>
             {texts.comment}
           </Typography>
 
           <Typography
             mb={1}
-            fontSize={20}
+            fontSize={18}
             color='textSecondary'
             px={5}
             fontWeight={200}>
             {texts.subTitle}
           </Typography>
-          <Box display='flex' gap={2} my={4} px={2}>
+          <Box
+            display='flex'
+            gap={2}
+            my={4}
+            px={2}
+            sx={{
+              flexDirection: {
+                xs: "column",
+                md: "row",
+              },
+            }}>
             <CardButton
               // variant='contained'
               LinkComponent={Link}

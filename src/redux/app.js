@@ -24,7 +24,7 @@ export const { disconnected, updateApp } = user.actions;
 export default persistReducer(
   {
     storage,
-    key: "__INSTA_CLASS_DATA__",
+    key: "__INSTA_CLASS_DATA__LOCAL_STORAGE__",
   },
   user.reducer
 );

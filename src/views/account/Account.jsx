@@ -76,12 +76,12 @@ export default function Account() {
         <Box
           component={Paper}
           textAlign='center'
-          m={3}
+          m={{ xs: 0.5, md: 3 }}
           bgcolor='background.paper'
           overflow='hidden'
-          width={800}
+          width={850}
           minWidth={0}
-          minHeight={550}
+          minHeight={600}
           display='flex'
           flexDirection='row'>
           <Box

@@ -14,11 +14,13 @@ export default function Home() {
       appear={false}
       in={paths.includes(normalizePathname(pathname))}
       style={{
-        height: "100dvh",
-        width: "100dvw",
+        height: "100%",
+        width: "100%",
         display: "flex",
         flexDirection: "column",
         position: "absolute",
+        overflow: "hidden",
+        overflowY: "auto",
         top: 0,
         left: 0,
       }}>
