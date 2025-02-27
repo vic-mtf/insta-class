@@ -124,7 +124,10 @@ export default function SignUp() {
               onClick={() => handleChangeSate((step) => Math.max(step - 1, 0))}>
               {texts.footer.buttons.back.text}
             </Button>
-            <Button variant='contained' type='submit' disabled={loading}>
+            <Button
+              variant='contained'
+              type='submit'
+              disabled={loading || step === 3}>
               {texts.footer.buttons.next.text}
             </Button>
           </Box>
