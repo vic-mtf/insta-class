@@ -6,38 +6,31 @@ from src.middlewares.authenticate import authenticate
 from flask_cors import CORS
 from src.middlewares.socket_token_required import socket_token_required
 import os
-socketio = SocketIO(None, cors_allowed_origins="*")
 
-
-def cerate_app():
-    static_folder =os.path.join(os.getcwd(), 'public')
-    print(static_folder)
-    app = Flask(__name__, static_url_path='', static_folder='../public')
-    app.config['SECRET_KEY'] = generate_hex_code(32)
-    CORS(app, resources={
-        r"^/api/": {"origins": "*"}  # Allow all origins for this route
-    })
-    socketio.init_app(app)
-    return app
-
-
-app = cerate_app()
+app = Flask(__name__)
+app.config['SECRET_KEY'] = generate_hex_code(32)
+socketio = SocketIO(app, cors_allowed_origins="*")
 app.before_request(authenticate)
 
-
-app = Flask(__name__,)
-
-
 @app.errorhandler(404)
-def serve_react(route):
-    print(route)
+def serve_react(_):
     return send_from_directory(os.path.join(os.getcwd(), 'src/static'), 'index.html')
 
-
 app.register_blueprint(router, url_prefix='/api')
+CORS(app,resources={r"/*":{"origins":"*"}})
 
-
-@socketio.on("connection")
+@socketio.on("connect")
 @socket_token_required
-def on_connect():
-    print("Client connected")
+def connected():
+    
+    print('Client connected')
+    # """event listener when client connects to the server"""
+    # print(request.sid)
+    # print("client has connected")
+    # emit("connect",{"data":f"id: {request.sid} is connected"})
+
+@socketio.on("disconnect")
+def disconnected():
+    print('Client disconnected')
+    # """event listener when client disconnects from the server"""
+    # print("client has disconnected")
