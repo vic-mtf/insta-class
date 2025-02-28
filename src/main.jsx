@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider as ReactReduxProvider } from "react-redux";
 import { ThemeProvider, createTheme } from "@mui/material";
+import SocketIOProvider from "./components/SocketIOProvider";
 import store from "./redux/store";
 import "./styles/index.css";
 import App from "./App.jsx";
@@ -21,9 +22,11 @@ const theme = createTheme({
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ReactReduxProvider store={store}>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
+      <SocketIOProvider>
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
+      </SocketIOProvider>
     </ReactReduxProvider>
   </StrictMode>
 );
