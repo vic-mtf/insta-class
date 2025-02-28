@@ -15,8 +15,8 @@ import SignUp from "./sign-up/SignUp";
 import Login from "./login/Login";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import normalizePathname from "../../utils/normalizePathname";
-import logo from "../../assets/class_room_100.png";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import LogoApp from "../../components/LogoApp";
 
 export default function Account() {
   const { pathname } = useLocation();
@@ -33,7 +33,7 @@ export default function Account() {
         <AppBar color='primary' position='relative' sx={{ zIndex: 100 }}>
           <Toolbar>
             <IconButton
-              sx={{ color: "white", mr: 2 }}
+              sx={{ color: "white", mr: 1 }}
               onClick={() => {
                 try {
                   navigateTo(-1);
@@ -43,26 +43,7 @@ export default function Account() {
               }}>
               <ArrowBackIcon />
             </IconButton>
-            <Box
-              display='flex'
-              flexDirection='row'
-              justifyContent='center'
-              alignItems='center'
-              gap={1}>
-              <Box
-                component='img'
-                alt='logo'
-                src={logo}
-                width={50}
-                sx={{ filter: "grayscale(500%)" }}
-              />
-              <Typography
-                variant='h5'
-                fontWeight='bold'
-                sx={{ color: "white" }}>
-                Insta Class
-              </Typography>
-            </Box>
+            <LogoApp color='white' />
           </Toolbar>
         </AppBar>
       </div>
