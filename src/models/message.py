@@ -3,7 +3,7 @@ from src.tools.generate_code import generate_hex_code
 
 
 class Message:
-    def __init__(self, content, sender, receiver, timestamp, _type='text'):
+    def __init__(self, content, sender, receiver, timestamp, _type="text"):
         self.content = content
         self.sender = sender
         self.receiver = receiver
@@ -25,18 +25,17 @@ class Message:
 
     def __str__(self):
         args = [
-            'content',
-            'sender',
-            'receiver',
-            'timestamp',
-            '_type',
-            'created_at',
-            'updated_at',
-            'type',
-            'read',
-            'played',
-            'edited'
-            '_id',
-            'reply'
+            "content",
+            "sender",
+            "receiver",
+            "timestamp",
+            "_type",
+            "created_at",
+            "updated_at",
+            "type",
+            "read",
+            "played",
+            "edited" "_id",
+            "reply",
         ]
         return self.get_user_infos_as_dict(*args)

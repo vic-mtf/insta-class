@@ -27,12 +27,14 @@ class ClassRoom(Data):
         for message in self.messages:
             if message._id == _id:
                 return message
+
     @classmethod
     def get_class_room(cls, _id: str):
         collection = super().get_collection(cls.collection_name)
         for class_room in collection:
             if class_room._id == _id:
                 return class_room
+
     @classmethod
     def get_class_rooms_by_teacher(cls, teacher_id: str) -> list:
         collection = super().get_collection(cls.collection_name)
