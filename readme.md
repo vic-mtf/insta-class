@@ -21,11 +21,11 @@ Voici un aperçu de la structure du projet :
 projet/
 ├── configs/                # Dossier contenant les fichiers de configuration
 ├── data/                   # Dossier pour les données (ex : fichiers JSON, CSV, etc.)
+├── public/                 # Fichiers buildés de l'application React
 ├── src/                    # Dossier principal du code source
 │   ├── controllers/        # Contrôleurs de l'application
 │   ├── models/             # Modèles de données (ex : classes pour la base de données)
 │   ├── router/             # Fichiers de routage (ex : définition des routes de l'API)
-    ├── static/             # Fichiers buildés de l'application React
 │   ├── tools/              # Outils utilitaires (ex : fonctions helper)
 │   └── app.py              # Point d'entrée de l'application Flask
 ├── .env                    # Fichier de variables d'environnement
