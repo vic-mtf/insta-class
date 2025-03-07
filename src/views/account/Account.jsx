@@ -28,8 +28,11 @@ export default function Account() {
       height='100dvh'
       bgcolor='primary.main'
       flexDirection='column'
-      width='100%'>
-      <div>
+      width='100%'
+      sx={{
+        overflowY: "auto",
+      }}>
+      <div style={{ position: "sticky" }}>
         <AppBar color='primary' position='relative' sx={{ zIndex: 100 }}>
           <Toolbar>
             <IconButton
@@ -62,7 +65,7 @@ export default function Account() {
           overflow='hidden'
           width={850}
           minWidth={0}
-          minHeight={600}
+          minHeight={550}
           display='flex'
           flexDirection='row'>
           <Box

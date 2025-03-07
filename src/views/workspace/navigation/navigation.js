@@ -3,13 +3,14 @@ import HomeIcon from "@mui/icons-material/Home";
 import SettingsIcon from "@mui/icons-material/Settings";
 import MessageIcon from "@mui/icons-material/Message";
 import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
+import WorkspaceHome from "../workspace-home/WorkspaceHome";
 
 const navigation = [
   {
     segment: "home",
     title: "Accueil",
     icon: HomeIcon,
-    component: "div",
+    component: WorkspaceHome,
   },
   {
     segment: "discussions",

@@ -27,7 +27,7 @@ import useUserData from "../../../hooks/useUserData";
 import { useLayoutEffect } from "react";
 
 export default function Login() {
-  const [{ loading, error, data }, refesh] = useAxios(
+  const [{ loading, error, data }, refresh] = useAxios(
     { method: "POST", url: "/api/login" },
     { manual: true }
   );
@@ -46,7 +46,7 @@ export default function Login() {
   const onSubmit = async (data) => {
     if (data?.uname?.trim() && data?.pwd?.trim())
       try {
-        const response = await refesh({ data });
+        const response = await refresh({ data });
         const { app } = store.getState();
         dispatch(updateUser({ data: { connected: true, ...response.data } }));
         dispatch(
