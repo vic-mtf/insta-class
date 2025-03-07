@@ -31,12 +31,25 @@ class Data:
             index = Data.find_index(_id, collection)
             collection[index] = self
         Data.save_data(newData)
+    
+    @classmethod
+    def delete(cls, _id: str, collection_name: str):
+        data_base = cls.get_all_data()
+        collection = data_base[collection_name]
+        index = cls.find_index(_id, collection)
+        if index >= 0:
+            del collection[index]
+            data_base[collection_name] = collection
+            cls.save_data(data_base)
 
+    
+    @classmethod
     def save_data(cls, data_base={}):
         with open(DATA_BASE_FILE_PATH, 'wb') as file:
             data = pickle.Pickler(file)
             data.dump(data_base)
 
+    @classmethod
     def get_all_data(cls) -> dict:
 
         try:
@@ -49,7 +62,7 @@ class Data:
                 data = pickle.Pickler(file)
                 data.dump(data_base)
                 return data_base
-
+    @classmethod
     def get_collection(cls, collection_name: str) -> list:
         raw_data = Data.get_all_data()
         collection = []
@@ -59,20 +72,15 @@ class Data:
             raw_data[collection_name] = collection
             Data.save_data(raw_data)
         return collection
-
+    
+    @classmethod
     def find_data(cls, _id, data: list):
         for item in data:
             if isinstance(item, Data) and item._id == _id:
                 return item
-
+    @classmethod
     def find_index(cls, _id, data: list) -> int:
         for i, item in enumerate(data):
             if isinstance(item, Data) and item._id == _id:
                 return i
         return -1
-
-    save_data = classmethod(save_data)
-    find_data = classmethod(find_data)
-    find_index = classmethod(find_index)
-    get_collection = classmethod(get_collection)
-    get_all_data = classmethod(get_all_data)

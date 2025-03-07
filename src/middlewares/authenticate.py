@@ -13,6 +13,7 @@ def check_path(path):
 
 
 def authenticate():
-    if check_path(request.path):
+    if check_path(request.path) and request.method in ['POST', 'GET' 'PUT', 'DELETE']:
+        print(request.method)
         token = get_token()
         return None if decode_token(token) else make_response({'message': 'Invalid token'}, 401)

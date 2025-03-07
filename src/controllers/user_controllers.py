@@ -1,11 +1,13 @@
 from flask import request, make_response
+from flask_socketio import emit
 import json
 from src.models.user import User
 from src.tools.password_crypt import check_password, encrypt_password
 from src.tools.jwt_token import create_token, get_token, decode_token
 from src.models.teacher import Teacher
 from src.models.student import Student
-
+from src.models.invitation import Invitation
+from src.tools.get_clients import get_clients
 
 def login():
     try:
@@ -36,9 +38,17 @@ def signup():
             user = User(*data)
             user = Teacher(user) if role == 'teacher' else Student(user)
             user.save()
+            keys = ['fname', 'lname', 'uname', 'role', 'profile_image', '_id' ]
+            new_user = user.get_user_infos_as_dict(*keys)
+            print(new_user)
+            clients = get_clients()
+            print(clients)
+            for client in clients:
+                emit('new-user', new_user, namespace='/', to=client.get('sid'))
             return make_response({"message": "account created successfully"}, 201)
         return make_response({"message": "An account with that username already exists"}, 409)
     except Exception as e:
+        print(e)
         return make_response({"message": str(e)}, 400)
 
 
@@ -55,3 +65,21 @@ def upload_profile_image():
     return {
         "message": "Profile image uploaded successfully"
     }
+
+def get_user_info():
+    ...
+
+def get_users():
+    token = get_token()
+    _id = decode_token(token)['user_id']
+    filerUser = lambda user: user._id != _id
+    invitations = [invitation.guest for invitation in Invitation.get_senders(_id)]
+    if _id:
+        users = filter(filerUser, User.get_all_users()) 
+        user_data = []
+        keys = ['fname', 'lname', 'uname', 'role', 'profile_image', '_id']
+        for user in users:
+            data = user.get_user_infos_as_dict(*keys)
+            data['guest'] = True if user._id in  invitations else False
+            user_data.append(data)
+        return make_response(user_data, 200)

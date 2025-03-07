@@ -30,13 +30,13 @@ class User:
         self.fname = fname if fname else self.fname
         self.lname = lname if lname else self.lname
         self.updated_at = datetime.datetime.now()
-
         User.update_user(self)
 
     def get_user_infos_as_dict(self, *args: str) -> dict:
         data = {}
         for arg in args:
-            data[arg] = getattr(self, arg)
+            if hasattr(self, arg):
+                data[arg] = getattr(self, arg)
         return data
 
     def __str__(self):
@@ -45,6 +45,7 @@ class User:
     def set_last_login(self, logined_at: datetime | str | float | int) -> None:
         self.last_logined_at = logined_at
 
+    @classmethod
     def update_user(cls, user):
         users = User.get_all_users()
         for i, user in enumerate(users):
@@ -54,7 +55,7 @@ class User:
                     data = pickle.Pickler(file)
                     data.dump(users)
                 break
-
+    @classmethod
     def get_all_users(cls) -> list:
         try:
             with open(DATA_BASE_FILE_PATH, 'rb') as file:
@@ -72,13 +73,14 @@ class User:
         for user in users:
             if user._id == _id:
                 return user
-
+            
+    @classmethod
     def get_user_by_username(cls, username: str):
         users = User.get_all_users()
         for user in users:
             if user.uname == username:
                 return user
-
+    @classmethod
     def save_user(cls, user):
         users = User.get_all_users()
         users.append(user)
@@ -86,6 +88,7 @@ class User:
             data = pickle.Pickler(file)
             data.dump(users)
 
+    @classmethod
     def delete_user(cls, _id: str):
         users = User.get_all_users()
         for i, user in enumerate(users):
@@ -95,10 +98,3 @@ class User:
                     data = pickle.Pickler(file)
                     data.dump(users)
                 break
-
-    update_user = classmethod(update_user)
-    get_all_users = classmethod(get_all_users)
-    get_user = classmethod(get_user)
-    get_user_by_username = classmethod(get_user_by_username)
-    save_user = classmethod(save_user)
-    delete_user = classmethod(delete_user)

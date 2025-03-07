@@ -18,4 +18,6 @@ def decode_token(token: str) -> dict:
 
 
 def get_token() -> str:
-    return request.headers.get('Authorization').split(' ')[1]
+    bearer_token = request.headers.get('Authorization')
+    if bearer_token:
+        return bearer_token.split(' ')[1] 
