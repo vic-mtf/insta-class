@@ -81,7 +81,9 @@ const CardInvitationSmallScreen = ({
   src,
   role,
   confirmButtonProps,
+  confirmButtonChildren = "confirmer",
   deleteButtonProps,
+  deleteButtonChildren = "supprimer",
 }) => {
   return (
     <ListItem
@@ -107,14 +109,14 @@ const CardInvitationSmallScreen = ({
             fullWidth
             {...confirmButtonProps}
             size='small'>
-            Confirmer
+            {confirmButtonChildren}
           </Button>
           <Button
             variant='outlined'
             fullWidth
             {...deleteButtonProps}
             size='small'>
-            Supprimer
+            {deleteButtonChildren}
           </Button>
         </Box>
       }>
