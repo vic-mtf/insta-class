@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function usePathRouter(initialPath = "home") {
@@ -17,9 +17,9 @@ function usePathRouter(initialPath = "home") {
     };
   }, [pathname, navigateTo]);
 
-  useLayoutEffect(() => {
-    navigateTo(`/workspace/${initialPath}`);
-  }, [navigateTo, initialPath]);
+  useEffect(() => {
+    if (pathname === "/workspace") navigateTo(`/workspace/${initialPath}`);
+  }, [navigateTo, initialPath, pathname]);
 
   return router;
 }

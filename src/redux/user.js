@@ -8,6 +8,9 @@ const user = createSlice({
   initialState: {
     connected: false,
     //image: null,
+    discussion: {
+      selected: null,
+    }
   },
   reducers: {
     updateUser(state, actions) {

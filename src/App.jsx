@@ -17,7 +17,12 @@ export default function App() {
         width: "100%",
         height: "100dvh",
       }}>
-      {<RouterProvider router={router(connected)} />}
+      {
+        <RouterProvider
+          router={router(connected)}
+          key={connected ? "connected" : "disconnected"}
+        />
+      }
     </div>
   );
 }

@@ -94,7 +94,7 @@ SecurityIdentity.displayName = "SecurityIdentity";
 
 const passwordFields = [
   { name: "pwd", label: "Mot de passe" },
-  { name: "confirmPwd", label: "Cnfirmer" },
+  { name: "confirmPwd", label: "Confirmer" },
 ];
 
 const texts = {

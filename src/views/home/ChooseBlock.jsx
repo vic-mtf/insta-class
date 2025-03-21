@@ -51,7 +51,11 @@ export default function ChooseBlock() {
           },
         }}>
         <div style={{ width: "100%", margin: "10px 0" }}>
-          <Typography variant='h5' textAlign='center' mt={1}>
+          <Typography
+            variant='h5'
+            textAlign='center'
+            mt={1}
+            color='textPrimary'>
             {texts.title}{" "}
             <Typography
               variant='h5'
@@ -64,6 +68,7 @@ export default function ChooseBlock() {
           <Typography
             my={2}
             component='blockquote'
+            color='textPrimary'
             pl={2}
             sx={{
               borderLeft: (theme) => `5px solid ${theme.palette.primary.main}`,

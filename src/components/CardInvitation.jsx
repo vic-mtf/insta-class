@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import PropTypes from "prop-types";
+import { alpha } from "@mui/material";
 
 const CardInvitation = React.memo((props) => {
   const theme = useTheme();
@@ -38,7 +39,12 @@ const CardInvitationLargeScreen = ({
 }) => {
   return (
     <Box>
-      <Card sx={{ maxWidth: 240, minWidth: 180 }}>
+      <Card
+        sx={{
+          maxWidth: 240,
+          minWidth: 180,
+          background: (t) => alpha(t.palette.background.paper, 0.6),
+        }}>
         <CardActionArea>
           <CardMedia
             sx={{

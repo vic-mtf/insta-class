@@ -9,8 +9,7 @@ import { useDispatch } from "react-redux";
 import { updateUser } from "../../../redux/user";
 import SkeletonCardInvitation from "../../../components/SkeletonCardInvitation";
 import UserItem from "./UserItem";
-
-let loaded = false;
+import store from "../../../redux/store";
 
 const WorkspaceHome = () => {
   const users = useSelector((state) => state.user.users);
@@ -29,7 +28,6 @@ const WorkspaceHome = () => {
     timers.push(
       setTimeout(
         async () => {
-          loaded = true;
           timers.forEach((timer) => {
             clearTimeout(timer);
             timers.pop();
@@ -38,7 +36,7 @@ const WorkspaceHome = () => {
           const users = response.data;
           dispatch(updateUser({ data: { users } }));
         },
-        loaded ? 0 : 2000
+        store.getState().user.users ? 0 : 2000
       )
     );
   }, [refresh, timers, dispatch]);
@@ -64,7 +62,7 @@ const WorkspaceHome = () => {
               const id = user?._id;
               const name = `${user.fname} ${user.lname}`;
               const role = user?.role;
-              const profileImage = user?.profileImage;
+              const profileImage = user?.profile_image;
               const guest = user?.guest;
               return (
                 <UserItem

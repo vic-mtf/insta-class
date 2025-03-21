@@ -1,7 +1,5 @@
 import {
-  Avatar,
   Box,
-  Button,
   Card,
   CardActions,
   CardContent,
@@ -16,7 +14,6 @@ import {
   Skeleton,
 } from "@mui/material";
 import React from "react";
-import PropTypes from "prop-types";
 
 const SkeletonCardInvitation = React.memo(() => {
   const theme = useTheme();
@@ -29,7 +26,13 @@ const SkeletonCardInvitation = React.memo(() => {
 const CardInvitationLargeScreen = () => {
   return (
     <Box>
-      <Card sx={{ maxWidth: 240, minWidth: 180 }}>
+      <Card
+        sx={{
+          maxWidth: 240,
+          minWidth: 180,
+          boxShadow: 0,
+          border: (t) => `1px solid ${t.palette.divider}`,
+        }}>
         <CardMedia
           sx={{
             aspectRatio: 1,
@@ -77,13 +80,7 @@ const CardInvitationLargeScreen = () => {
   );
 };
 
-const CardInvitationSmallScreen = ({
-  name = "Obed Mbo lubama",
-  src,
-  role,
-  confirmButtonProps,
-  deleteButtonProps,
-}) => {
+const CardInvitationSmallScreen = () => {
   return (
     <ListItem
       disableGutters
@@ -102,21 +99,20 @@ const CardInvitationSmallScreen = ({
         },
       }}
       secondaryAction={
-        <Box display='flex' flexDirection='row' position='relative' gap={1}>
-          <Button
-            variant='contained'
-            fullWidth
-            {...confirmButtonProps}
-            size='small'>
-            Confirmer
-          </Button>
-          <Button
-            variant='outlined'
-            fullWidth
-            {...deleteButtonProps}
-            size='small'>
-            Supprimer
-          </Button>
+        <Box
+          display='flex'
+          flexDirection='row'
+          position='relative'
+          gap={1}
+          sx={{
+            "& >  div": {
+              borderRadius: 1,
+              width: 100,
+              height: 40,
+            },
+          }}>
+          <Skeleton variant='rectangular' component='div'></Skeleton>
+          <Skeleton variant='rectangular' component='div'></Skeleton>
         </Box>
       }>
       <ListItemButton alignItems='flex-start' disableGutters>
@@ -126,36 +122,21 @@ const CardInvitationSmallScreen = ({
             height: 80,
             mr: 1,
           }}>
-          <Avatar src={src} sx={{ width: "100%", height: "100%" }} />
+          <Skeleton variant='circular' sx={{ width: "100%", height: "100%" }} />
         </ListItemAvatar>
         <ListItemText
-          primary={name}
+          primary={<Skeleton variant='text' />}
           slotProps={{
             primary: {
               fontWeight: "bold",
             },
           }}
-          secondary={
-            <Typography variant='body2' sx={{ color: "text.secondary" }} mb={1}>
-              {role === "teacher" ? "Enseignat" : "Etudiant"}
-            </Typography>
-          }
+          secondary={<Skeleton variant='text' sx={{ maxWidth: "60%" }} />}
         />
       </ListItemButton>
     </ListItem>
   );
 };
-
-const itemPropTypes = {
-  name: PropTypes.string,
-  src: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(URL)]),
-  confirmButtonProps: PropTypes.object,
-  deleteButtonProps: PropTypes.object,
-  role: PropTypes.oneOf(["teacher", "student"]),
-};
-
-CardInvitationSmallScreen.propTypes = itemPropTypes;
-CardInvitationLargeScreen.propTypes = itemPropTypes;
 
 SkeletonCardInvitation.displayName = "SkeletonCardInvitation";
 

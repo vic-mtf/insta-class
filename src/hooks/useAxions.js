@@ -3,7 +3,7 @@ import { makeUseAxios } from "axios-hooks";
 //import queryString from "query-string";
 
 export const axios = _AXIOS.create({
-  baseURL: import.meta.env.VITE_SERVER_BASE_URL,
+  baseURL: import.meta.env.DEV ? import.meta.env.VITE_SERVER_BASE_URL : "",
   // responseType: import.meta.env.VITE_RESPONSE_TYPE,
   // responseEncoding: import.meta.env.VITE_RESPONSE_ENCODING,
   // maxContentLength: import.meta.env.VITE_MAX_CONTENT_LENGTH,
@@ -13,3 +13,5 @@ export const axios = _AXIOS.create({
 const useAxios = makeUseAxios({ axios });
 
 export default useAxios;
+
+console.log(import.meta.env.DEV);

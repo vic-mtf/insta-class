@@ -8,6 +8,12 @@ const user = createSlice({
   initialState: {
     user: null,
     remembered: false,
+    theme: {
+      mode: "light",
+    },
+    discussion: {
+      pin: null,
+    },
   },
   reducers: {
     updateApp(state, actions) {

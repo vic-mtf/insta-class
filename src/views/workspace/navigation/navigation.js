@@ -2,8 +2,12 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import HomeIcon from "@mui/icons-material/Home";
 import SettingsIcon from "@mui/icons-material/Settings";
 import MessageIcon from "@mui/icons-material/Message";
-import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
+import InvitationBadgeIcon from "./InvitationBadgeIcon";
 import WorkspaceHome from "../workspace-home/WorkspaceHome";
+import Invitations from "../invitations/Invitations";
+import Discussion from "../discussions/Discussion";
+import Profile from "../profile/Profile";
+import Params from "../params/Params";
 
 const navigation = [
   {
@@ -16,13 +20,13 @@ const navigation = [
     segment: "discussions",
     title: "Discussions",
     icon: MessageIcon,
-    component: "div",
+    component: Discussion,
   },
   {
     segment: "invitations",
     title: "Invitations",
-    icon: MarkEmailReadIcon,
-    component: "div",
+    icon: InvitationBadgeIcon,
+    component: Invitations,
   },
   {
     kind: "divider",
@@ -31,13 +35,13 @@ const navigation = [
     segment: "account",
     title: "Compte",
     icon: AccountCircleIcon,
-    component: "div",
+    component: Profile,
   },
   {
     segment: "settings",
     title: "Paramètres",
     icon: SettingsIcon,
-    component: "div",
+    component: Params,
   },
 ];
 
