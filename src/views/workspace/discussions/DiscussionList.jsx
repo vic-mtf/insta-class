@@ -1,15 +1,13 @@
-import { Box, List, Typography } from "@mui/material";
+import { Box, Typography, List } from "@mui/material";
 import React, { useCallback } from "react";
-import { Virtuoso } from "react-virtuoso";
 import DiscussionItem from "./DiscussionItem";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../../../redux/user";
 import { useSelector } from "react-redux";
-import useAxios from "../../../hooks/useAxions";
-import useBearerToken from "../../../hooks/useBearerToken";
-import { useEffect } from "react";
 import store from "../../../redux/store";
+import { Virtuoso } from "react-virtuoso";
+// import useLoadDiscussion from "../../../hooks/useLoadDiscussions";
 
 const DiscussionList = React.memo(
   React.forwardRef((prop, ref) => {
@@ -20,24 +18,7 @@ const DiscussionList = React.memo(
       []
     );
     const discussions = useSelector((store) => store.user.discussions);
-    const dispatch = useDispatch();
-    const Authorization = useBearerToken();
-    const [, refresh] = useAxios(
-      {
-        url: "api/auth/discussions",
-        headers: { Authorization },
-        method: "GET",
-      },
-      { manual: true }
-    );
-
-    useEffect(() => {
-      refresh().then((response) => {
-        const data = response.data;
-        dispatch(updateUser({ data: { discussions: data } }));
-      });
-    }, [refresh, dispatch]);
-
+    // useLoadDiscussion();
     return (
       <Box
         ref={ref}
@@ -45,17 +26,14 @@ const DiscussionList = React.memo(
         overflow='hidden'
         display='flex'
         flexDirection='column'>
-        {/* {discussions?.length > 0 && (
+        {discussions?.length > 0 && (
           <Virtuoso
             data={discussions}
-            components={{
-              List,
-            }}
+            components={{ List }}
             itemContent={itemContent}
           />
-        )} */}
-        {
-          //discussions.length === 0 &&
+        )}
+        {discussions?.length === 0 && (
           <Box
             display='flex'
             flex={1}
@@ -70,7 +48,7 @@ const DiscussionList = React.memo(
               Aucune discussion en cours
             </Typography>
           </Box>
-        }
+        )}
       </Box>
     );
   })

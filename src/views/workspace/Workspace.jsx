@@ -10,6 +10,7 @@ import LogoApp from "../../components/LogoApp";
 import useInvitationReceived from "../../hooks/events/useInvitationReceived";
 import useNewUser from "../../hooks/events/useNewUser";
 import useSendInvitation from "../../hooks/events/useSendInvitation";
+import useLoadDiscussion from "../../hooks/useLoadDiscussions";
 
 export default function Workspace() {
   const router = usePathRouter();
@@ -18,6 +19,7 @@ export default function Workspace() {
   useInvitationReceived();
   useNewUser();
   useSendInvitation();
+  useLoadDiscussion(false);
 
   return (
     <AppProvider

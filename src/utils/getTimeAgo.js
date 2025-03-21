@@ -2,9 +2,9 @@ export default function getTimeAgo(pastDate, language = "fr") {
   // Vérifier si la date passée est valide
   const date = new Date(pastDate);
   if (isNaN(date)) {
-    throw new Error("La date fournie est invalide.");
+    return null;
   }
-  console.log(date);
+
   const difference = Date.now() - date.getTime();
 
   // Vérifier si la différence est un nombre valide
