@@ -6,8 +6,10 @@ from src.tools.password_crypt import check_password, encrypt_password
 from src.tools.jwt_token import create_token, get_token, decode_token
 from src.models.teacher import Teacher
 from src.models.student import Student
+from src.models.discussion import Discussion
 from src.models.invitation import Invitation
 from src.tools.get_clients import get_clients, manage_client_session
+from src.tools.get_clients import get_client_sessions
 
 
 def login():
@@ -16,7 +18,7 @@ def login():
         user = User.get_user_by_username(data.get("uname"))
         if user:
             if check_password(user.pwd, data["pwd"]):
-                keys = ["fname", "lname", "uname"]
+                keys = ["fname", "lname", "uname", "profile_image", "_id"]
                 user_data = user.get_user_infos_as_dict(*keys)
                 print(user_data)
                 user_data["token"] = create_token(user._id)
@@ -77,16 +79,78 @@ def get_user_info(): ...
 def get_users():
     token = get_token()
     _id = decode_token(token)["user_id"]
-    filerUser = lambda user: user._id != _id
+    user = User.get_user(_id)
+    members = []
+    for discusion in Discussion.get_discussions_into_member(_id):
+        if discusion.type == "direct":
+            members += discusion.members
+    contacts = user.students if user.role == "teacher" else user.teachers
+    contacts += user.colleagues + members
+
+    if _id not in contacts:
+        contacts.append(_id)
+
     invitations = [invitation.guest for invitation in Invitation.get_senders(_id)]
     guests = [invitation.sender for invitation in Invitation.get_guests(_id)]
     if _id:
-        users = filter(filerUser, User.get_all_users())
+        users = User.get_all_users()
         user_data = []
         keys = ["fname", "lname", "uname", "role", "profile_image", "_id"]
         for user in users:
             data = user.get_user_infos_as_dict(*keys)
             data["guest"] = True if user._id in invitations else False
-            if user._id not in guests:
+            if user._id not in guests and user._id not in contacts:
                 user_data.append(data)
         return make_response(user_data, 200)
+
+
+def get_guests():
+    token = get_token()
+    _id = decode_token(token).get("user_id")
+    keys = ["fname", "lname", "role", "profile_image", "_id"]
+    print(_id)
+    invitations = [
+        User.get_user(invitation.sender).get_user_infos_as_dict(*keys)
+        for invitation in Invitation.get_guests(_id)
+    ]
+    print(invitations)
+    return make_response(invitations, 200)
+
+
+def get_discussions():
+    token = get_token()
+    _id = decode_token(token).get("user_id")
+    discussions = Discussion.get_discussions_into_member(_id)
+
+    discussion_data = []
+    keys = [
+        "type",
+        "name",
+        "author",
+        "description",
+        "subject",
+        "delegates",
+        "members",
+        "messages",
+        "disciplines",
+        "_id",
+    ]
+
+    for discussion in discussions:
+        data = discussion.get_as_dict(*keys)
+        user_keys = ["fname", "lname", "_id", "profile_image", "last_logined_at"]
+        members = [
+            User.get_user(member).get_user_infos_as_dict(*user_keys)
+            for member in discussion.members
+        ]
+        members_status = []
+        for member in members:
+            member["status"] = (
+                "online" if get_client_sessions(member.get("_id")) else "offline"
+            )
+            members_status.append(member)
+        data["members"] = members_status
+        data["messages"] = [message.get_as_dict() for message in discussion.messages]
+        discussion_data.append(data)
+
+    return make_response(discussion_data, 200)

@@ -8,6 +8,8 @@ from flask_cors import CORS
 from src.middlewares.socket_token_required import socket_token_required
 from src.tools.get_clients import get_clients
 from src.events.events import events
+from src.models.user import User
+from datetime import datetime
 import os
 
 
@@ -48,6 +50,9 @@ def disconnected():
     for client in clients:
         if client.get("sid") == request.sid:
             clients.remove(client)
+            user = User.get_user(client.get("_id"))
+            user.set_last_login(datetime.now().isoformat())
+            User.update_user(user)
             break
 
 

@@ -17,7 +17,6 @@ class Teacher(User):
                 identiteis.get("lname"),
             )
         self.role = "teacher"
-        self.disciplines = []
         self.students = []
         self.class_rooms = []
         self.colleagues = []

@@ -12,26 +12,25 @@ class Data:
             collection_name if collection_name else self.collection_name
         )
         self._id = generate_hex_code()
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        self.created_at = datetime.now().isoformat()
+        self.updated_at = datetime.now().isoformat()
 
     def save(self):
         _id = self._id
         collection_name = self.collection_name
 
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.now().isoformat()
 
         collection = Data.get_collection(collection_name)
-
         data = Data.find_data(_id, collection)
+        newData = Data.get_all_data()
         if data is None:
             collection.append(self)
-            newData = Data.get_all_data()
-            newData[collection_name] = collection
-
         else:
             index = Data.find_index(_id, collection)
             collection[index] = self
+
+        newData[collection_name] = collection
         Data.save_data(newData)
 
     @classmethod

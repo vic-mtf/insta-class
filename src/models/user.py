@@ -2,6 +2,7 @@ from datetime import datetime
 import pickle
 import os
 from src.tools.generate_code import generate_hex_code
+from typing import Self
 
 DATA_BASE_FILE_PATH = os.path.join("./data/users.bin")
 
@@ -12,13 +13,13 @@ class User:
         self.pwd = pwd  # password
         self.fname = fname  # file name
         self.lname = lname  # file name
-        self.last_logined_at = datetime.now()
         self.profile_image = None
 
     def save(self):
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        self.created_at = datetime.now().isoformat()
+        self.updated_at = datetime.now().isoformat()
         self._id = generate_hex_code()
+        self.last_logined_at = datetime.now().isoformat()
         find_user = User.get_user_by_username(self.uname)
         if find_user:
             raise Exception("Username already exists")
@@ -29,7 +30,7 @@ class User:
         self.pwd = pwd if pwd else self.pwd
         self.fname = fname if fname else self.fname
         self.lname = lname if lname else self.lname
-        self.updated_at = datetime.datetime.now()
+        self.updated_at = datetime.now().isoformat()
         User.update_user(self)
 
     def get_user_infos_as_dict(self, *args: str) -> dict:
@@ -46,11 +47,11 @@ class User:
         self.last_logined_at = logined_at
 
     @classmethod
-    def update_user(cls, user):
+    def update_user(cls, new_user):
         users = User.get_all_users()
         for i, user in enumerate(users):
-            if user._id == user._id:
-                users[i] = user
+            if new_user._id == user._id:
+                users[i] = new_user
                 with open(DATA_BASE_FILE_PATH, "wb") as file:
                     data = pickle.Pickler(file)
                     data.dump(users)
@@ -70,7 +71,7 @@ class User:
                 return users
 
     @classmethod
-    def get_user(cls, _id: str) -> "User":
+    def get_user(cls, _id: str) -> Self:
         users = User.get_all_users()
         for user in users:
             if user._id == _id:
