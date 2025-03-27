@@ -50,3 +50,49 @@ export default function formatDate(dateInput) {
       year: "2-digit",
     });
 }
+
+export function formatDateRelative(inputDate, lang = "fr-FR") {
+  const now = new Date();
+  const date = new Date(inputDate);
+  if (isNaN(date.getTime())) return inputDate;
+
+  const getWeek = (d) => {
+    const date = new Date(d);
+    date.setHours(0, 0, 0, 0);
+    date.setDate(date.getDate() + 3 - ((date.getDay() + 6) % 7));
+    const week1 = new Date(date.getFullYear(), 0, 4);
+    return (
+      1 +
+      Math.round(
+        ((date - week1) / 86400000 - 3 + ((week1.getDay() + 6) % 7)) / 7
+      )
+    );
+  };
+  const diffTime = now - date;
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  if (diffDays === 0)
+    return new Intl.RelativeTimeFormat(lang, { numeric: "auto" }).format(
+      0,
+      "day"
+    );
+  if (diffDays === 1)
+    return new Intl.RelativeTimeFormat(lang, { numeric: "auto" }).format(
+      -1,
+      "day"
+    );
+  if (diffDays === 2)
+    return new Intl.RelativeTimeFormat(lang, { numeric: "auto" }).format(
+      -2,
+      "day"
+    );
+  const sameWeek =
+    getWeek(now) === getWeek(date) && now.getFullYear() === date.getFullYear();
+  if (sameWeek) return date.toLocaleDateString(lang, { weekday: "long" });
+  return date
+    .toLocaleDateString(lang, {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    })
+    .replace(/\//g, "-");
+}
